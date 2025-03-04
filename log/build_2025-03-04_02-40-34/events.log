@@ -1,0 +1,211 @@
+[0.000000] (-) TimerEvent: {}
+[0.000840] (lab1_pubsub) JobQueued: {'identifier': 'lab1_pubsub', 'dependencies': OrderedDict()}
+[0.001014] (lab1_pubsub) JobStarted: {'identifier': 'lab1_pubsub'}
+[0.024922] (lab1_pubsub) JobProgress: {'identifier': 'lab1_pubsub', 'progress': 'cmake'}
+[0.027132] (lab1_pubsub) JobProgress: {'identifier': 'lab1_pubsub', 'progress': 'build'}
+[0.028340] (lab1_pubsub) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/mikhail/SFCS/build/lab1_pubsub', '--', '-j12', '-l12'], 'cwd': '/home/mikhail/SFCS/build/lab1_pubsub', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'mikhail'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/mikhail'), ('OLDPWD', '/home/mikhail/SFCS'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/mikhail/SFCS/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'mikhail'), ('NAME', 'HONOR-MagicBook'), ('WSL_INTEROP', '/run/WSL/4264_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/msys64/ucrt64/bin:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/WireGuard/:/mnt/c/Users/mikha/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/JetBrains/PyCharm 2023.3.4/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/mikhail/SFCS/install/lab1_pubsub:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/mikhail/SFCS/build/lab1_pubsub'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('CMAKE_PREFIX_PATH', '/home/mikhail/SFCS/install/lab1_pubsub:/opt/ros/humble'), ('WSLENV', '')]), 'shell': False}
+[0.098757] (-) TimerEvent: {}
+[0.186180] (lab1_pubsub) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target listener_node\x1b[0m\n'}
+[0.186836] (lab1_pubsub) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target talker_node\x1b[0m\n'}
+[0.198859] (-) TimerEvent: {}
+[0.225347] (lab1_pubsub) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/talker_node.dir/src/talker.cpp.o\x1b[0m\n'}
+[0.226225] (lab1_pubsub) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/listener_node.dir/src/listener.cpp.o\x1b[0m\n'}
+[0.299030] (-) TimerEvent: {}
+[0.399812] (-) TimerEvent: {}
+[0.500389] (-) TimerEvent: {}
+[0.600908] (-) TimerEvent: {}
+[0.701404] (-) TimerEvent: {}
+[0.801880] (-) TimerEvent: {}
+[0.902500] (-) TimerEvent: {}
+[1.002952] (-) TimerEvent: {}
+[1.103344] (-) TimerEvent: {}
+[1.203808] (-) TimerEvent: {}
+[1.304280] (-) TimerEvent: {}
+[1.404772] (-) TimerEvent: {}
+[1.505202] (-) TimerEvent: {}
+[1.605679] (-) TimerEvent: {}
+[1.706183] (-) TimerEvent: {}
+[1.806681] (-) TimerEvent: {}
+[1.907096] (-) TimerEvent: {}
+[2.007581] (-) TimerEvent: {}
+[2.108059] (-) TimerEvent: {}
+[2.208635] (-) TimerEvent: {}
+[2.309088] (-) TimerEvent: {}
+[2.409593] (-) TimerEvent: {}
+[2.510102] (-) TimerEvent: {}
+[2.610577] (-) TimerEvent: {}
+[2.711147] (-) TimerEvent: {}
+[2.811661] (-) TimerEvent: {}
+[2.912243] (-) TimerEvent: {}
+[3.012666] (-) TimerEvent: {}
+[3.113192] (-) TimerEvent: {}
+[3.213645] (-) TimerEvent: {}
+[3.314111] (-) TimerEvent: {}
+[3.414618] (-) TimerEvent: {}
+[3.515068] (-) TimerEvent: {}
+[3.615458] (-) TimerEvent: {}
+[3.715934] (-) TimerEvent: {}
+[3.816417] (-) TimerEvent: {}
+[3.916918] (-) TimerEvent: {}
+[4.017430] (-) TimerEvent: {}
+[4.117846] (-) TimerEvent: {}
+[4.218284] (-) TimerEvent: {}
+[4.318752] (-) TimerEvent: {}
+[4.419257] (-) TimerEvent: {}
+[4.519661] (-) TimerEvent: {}
+[4.620123] (-) TimerEvent: {}
+[4.720530] (-) TimerEvent: {}
+[4.821000] (-) TimerEvent: {}
+[4.921504] (-) TimerEvent: {}
+[5.022042] (-) TimerEvent: {}
+[5.122558] (-) TimerEvent: {}
+[5.223021] (-) TimerEvent: {}
+[5.323567] (-) TimerEvent: {}
+[5.424049] (-) TimerEvent: {}
+[5.524484] (-) TimerEvent: {}
+[5.624925] (-) TimerEvent: {}
+[5.725433] (-) TimerEvent: {}
+[5.825884] (-) TimerEvent: {}
+[5.926306] (-) TimerEvent: {}
+[6.026721] (-) TimerEvent: {}
+[6.127166] (-) TimerEvent: {}
+[6.227614] (-) TimerEvent: {}
+[6.328123] (-) TimerEvent: {}
+[6.428600] (-) TimerEvent: {}
+[6.529046] (-) TimerEvent: {}
+[6.629612] (-) TimerEvent: {}
+[6.730301] (-) TimerEvent: {}
+[6.830963] (-) TimerEvent: {}
+[6.931792] (-) TimerEvent: {}
+[7.032489] (-) TimerEvent: {}
+[7.133136] (-) TimerEvent: {}
+[7.233997] (-) TimerEvent: {}
+[7.334673] (-) TimerEvent: {}
+[7.435207] (-) TimerEvent: {}
+[7.535923] (-) TimerEvent: {}
+[7.636578] (-) TimerEvent: {}
+[7.737064] (-) TimerEvent: {}
+[7.837641] (-) TimerEvent: {}
+[7.938319] (-) TimerEvent: {}
+[8.038928] (-) TimerEvent: {}
+[8.139577] (-) TimerEvent: {}
+[8.240273] (-) TimerEvent: {}
+[8.340967] (-) TimerEvent: {}
+[8.441564] (-) TimerEvent: {}
+[8.542168] (-) TimerEvent: {}
+[8.642775] (-) TimerEvent: {}
+[8.743278] (-) TimerEvent: {}
+[8.843893] (-) TimerEvent: {}
+[8.944495] (-) TimerEvent: {}
+[9.045269] (-) TimerEvent: {}
+[9.146094] (-) TimerEvent: {}
+[9.246768] (-) TimerEvent: {}
+[9.347447] (-) TimerEvent: {}
+[9.447992] (-) TimerEvent: {}
+[9.548556] (-) TimerEvent: {}
+[9.649201] (-) TimerEvent: {}
+[9.750025] (-) TimerEvent: {}
+[9.850680] (-) TimerEvent: {}
+[9.951346] (-) TimerEvent: {}
+[10.052038] (-) TimerEvent: {}
+[10.152665] (-) TimerEvent: {}
+[10.253278] (-) TimerEvent: {}
+[10.353862] (-) TimerEvent: {}
+[10.454353] (-) TimerEvent: {}
+[10.554978] (-) TimerEvent: {}
+[10.655595] (-) TimerEvent: {}
+[10.756107] (-) TimerEvent: {}
+[10.856636] (-) TimerEvent: {}
+[10.957129] (-) TimerEvent: {}
+[11.057662] (-) TimerEvent: {}
+[11.158254] (-) TimerEvent: {}
+[11.258765] (-) TimerEvent: {}
+[11.359282] (-) TimerEvent: {}
+[11.459762] (-) TimerEvent: {}
+[11.560422] (-) TimerEvent: {}
+[11.660970] (-) TimerEvent: {}
+[11.761580] (-) TimerEvent: {}
+[11.862341] (-) TimerEvent: {}
+[11.962942] (-) TimerEvent: {}
+[12.063578] (-) TimerEvent: {}
+[12.164136] (-) TimerEvent: {}
+[12.264767] (-) TimerEvent: {}
+[12.365505] (-) TimerEvent: {}
+[12.466232] (-) TimerEvent: {}
+[12.566822] (-) TimerEvent: {}
+[12.667414] (-) TimerEvent: {}
+[12.767899] (-) TimerEvent: {}
+[12.868336] (-) TimerEvent: {}
+[12.968763] (-) TimerEvent: {}
+[13.069211] (-) TimerEvent: {}
+[13.169655] (-) TimerEvent: {}
+[13.270157] (-) TimerEvent: {}
+[13.370599] (-) TimerEvent: {}
+[13.471152] (-) TimerEvent: {}
+[13.571684] (-) TimerEvent: {}
+[13.672165] (-) TimerEvent: {}
+[13.772618] (-) TimerEvent: {}
+[13.873064] (-) TimerEvent: {}
+[13.973532] (-) TimerEvent: {}
+[14.073959] (-) TimerEvent: {}
+[14.174400] (-) TimerEvent: {}
+[14.274830] (-) TimerEvent: {}
+[14.375249] (-) TimerEvent: {}
+[14.475772] (-) TimerEvent: {}
+[14.576264] (-) TimerEvent: {}
+[14.676747] (-) TimerEvent: {}
+[14.777169] (-) TimerEvent: {}
+[14.877635] (-) TimerEvent: {}
+[14.978083] (-) TimerEvent: {}
+[15.078527] (-) TimerEvent: {}
+[15.178979] (-) TimerEvent: {}
+[15.279453] (-) TimerEvent: {}
+[15.379893] (-) TimerEvent: {}
+[15.480413] (-) TimerEvent: {}
+[15.580910] (-) TimerEvent: {}
+[15.681347] (-) TimerEvent: {}
+[15.781761] (-) TimerEvent: {}
+[15.882240] (-) TimerEvent: {}
+[15.982777] (-) TimerEvent: {}
+[16.083257] (-) TimerEvent: {}
+[16.094700] (lab1_pubsub) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable talker_node\x1b[0m\n'}
+[16.095665] (lab1_pubsub) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable listener_node\x1b[0m\n'}
+[16.183424] (-) TimerEvent: {}
+[16.283909] (-) TimerEvent: {}
+[16.384330] (-) TimerEvent: {}
+[16.484806] (-) TimerEvent: {}
+[16.585278] (-) TimerEvent: {}
+[16.685744] (-) TimerEvent: {}
+[16.786284] (-) TimerEvent: {}
+[16.852893] (lab1_pubsub) StdoutLine: {'line': b'[100%] Built target listener_node\n'}
+[16.853724] (lab1_pubsub) StdoutLine: {'line': b'[100%] Built target talker_node\n'}
+[16.886493] (-) TimerEvent: {}
+[16.900897] (lab1_pubsub) CommandEnded: {'returncode': 0}
+[16.904286] (lab1_pubsub) JobProgress: {'identifier': 'lab1_pubsub', 'progress': 'install'}
+[16.920128] (lab1_pubsub) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/mikhail/SFCS/build/lab1_pubsub'], 'cwd': '/home/mikhail/SFCS/build/lab1_pubsub', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'mikhail'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/mikhail'), ('OLDPWD', '/home/mikhail/SFCS'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/mikhail/SFCS/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'mikhail'), ('NAME', 'HONOR-MagicBook'), ('WSL_INTEROP', '/run/WSL/4264_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/msys64/ucrt64/bin:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/WireGuard/:/mnt/c/Users/mikha/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/JetBrains/PyCharm 2023.3.4/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/mikhail/SFCS/install/lab1_pubsub:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/mikhail/SFCS/build/lab1_pubsub'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('CMAKE_PREFIX_PATH', '/home/mikhail/SFCS/install/lab1_pubsub:/opt/ros/humble'), ('WSLENV', '')]), 'shell': False}
+[16.933757] (lab1_pubsub) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[16.936679] (lab1_pubsub) StdoutLine: {'line': b'-- Installing: /home/mikhail/SFCS/install/lab1_pubsub/lib/lab1_pubsub/listener_node\n'}
+[16.946068] (lab1_pubsub) StdoutLine: {'line': b'-- Set runtime path of "/home/mikhail/SFCS/install/lab1_pubsub/lib/lab1_pubsub/listener_node" to ""\n'}
+[16.947861] (lab1_pubsub) StdoutLine: {'line': b'-- Installing: /home/mikhail/SFCS/install/lab1_pubsub/lib/lab1_pubsub/talker_node\n'}
+[16.956129] (lab1_pubsub) StdoutLine: {'line': b'-- Set runtime path of "/home/mikhail/SFCS/install/lab1_pubsub/lib/lab1_pubsub/talker_node" to ""\n'}
+[16.956552] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub//launch\n'}
+[16.956885] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub//launch/lab1_pubsub.launch.py\n'}
+[16.957478] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/ament_index/resource_index/package_run_dependencies/lab1_pubsub\n'}
+[16.957806] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/ament_index/resource_index/parent_prefix_path/lab1_pubsub\n'}
+[16.958126] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/environment/ament_prefix_path.sh\n'}
+[16.958399] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/environment/ament_prefix_path.dsv\n'}
+[16.958701] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/environment/path.sh\n'}
+[16.958985] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/environment/path.dsv\n'}
+[16.959475] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/local_setup.bash\n'}
+[16.959826] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/local_setup.sh\n'}
+[16.960130] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/local_setup.zsh\n'}
+[16.960541] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/local_setup.dsv\n'}
+[16.960744] (lab1_pubsub) StdoutLine: {'line': b'-- Installing: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/package.dsv\n'}
+[16.960858] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/ament_index/resource_index/packages/lab1_pubsub\n'}
+[16.960955] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/cmake/lab1_pubsubConfig.cmake\n'}
+[16.961044] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/cmake/lab1_pubsubConfig-version.cmake\n'}
+[16.961131] (lab1_pubsub) StdoutLine: {'line': b'-- Up-to-date: /home/mikhail/SFCS/install/lab1_pubsub/share/lab1_pubsub/package.xml\n'}
+[16.964129] (lab1_pubsub) CommandEnded: {'returncode': 0}
+[16.986634] (-) TimerEvent: {}
+[17.003002] (lab1_pubsub) JobEnded: {'identifier': 'lab1_pubsub', 'rc': 0}
+[17.005667] (-) EventReactorShutdown: {}
