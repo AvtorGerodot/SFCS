@@ -1,15 +1,15 @@
-#include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
+#include "rclcpp/rclcpp.hpp"        //Основной заголовочный файл ROS2 для C++, содержащий основные классы и функции для работы с нодами
+#include "std_msgs/msg/string.hpp"  //Заголовочный файл для сообщения типа String из стандартного пакета std_msgs
 
-class ListenerNode : public rclcpp::Node {
+class ListenerNode : public rclcpp::Node {  //Определение класса ListenerNode, который наследуется от rclcpp::Node
 public:
-  ListenerNode() : Node("listener_node") {
-    // Подписка на топик /chatter
+  ListenerNode() : Node("listener_node") {  //Конструктор класса. Инициализирует ноду с именем "listener_node"
+    //cоздаём подписку на топик "chatter" и функцией обработки callback
     subscription_ = this->create_subscription<std_msgs::msg::String>(
       "chatter", 10, std::bind(&ListenerNode::callback, this, std::placeholders::_1));
 
-    // Публикация в топик /reply
-    publisher_ = this->create_publisher<std_msgs::msg::String>("reply", 10);
+    //создаём издателя-ответчика, публикующего сообщения типа String в топик "reply"
+    publisher_ = this->create_publisher<std_msgs::msg::String>("reply", 10);  
   }
 
 private:

@@ -1,10 +1,10 @@
-#include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
-#include <chrono>
+#include "rclcpp/rclcpp.hpp"          //Основной заголовочный файл ROS2 для C++, содержащий основные классы и функции для работы с нодами
+#include "std_msgs/msg/string.hpp"    //Заголовочный файл для сообщения типа String из стандартного пакета std_msgs
+#include <chrono>                     //Библиотека для работы со временем, используется для создания таймеров
 
 class TalkerNode : public rclcpp::Node {
 public:
-  TalkerNode() : Node("talker_node") {
+  TalkerNode() : Node("talker_node"), count_(0) { //Конструктор класса. Инициализирует ноду с именем "talker_node" и счетчик count_ значением 0
     // Публикация в топик /chatter
     publisher_ = this->create_publisher<std_msgs::msg::String>("chatter", 10);
 
@@ -21,9 +21,9 @@ private:
   void callback() {
     // Создание и отправка сообщения
     auto message = std_msgs::msg::String();
-    message.data = "Hello, world!";
+    message.data = "Hello, world! " + std::to_string(this->count_++); //запись тела сообщения с текстом и счётчиком отправленных сообщений
     RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
-    publisher_->publish(message);
+    publisher_->publish(message);   
   }
 
   void reply_callback(const std_msgs::msg::String::SharedPtr msg) {
@@ -34,6 +34,7 @@ private:
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  size_t count_;    //Счетчик для отслеживания количества отправленных сообщений
 };
 
 int main(int argc, char *argv[]) {
