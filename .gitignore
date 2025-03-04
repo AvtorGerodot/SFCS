@@ -1,0 +1,10 @@
+# Игнорировать директории сборки и установки
+build/
+install/
+log/
+
+# Игнорировать файлы, созданные CMake
+**/CMakeCache.txt
+**/CMakeFiles
+**/Makefile
+**/cmake_install.cmake
