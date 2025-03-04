@@ -1,0 +1,4 @@
+Invoking command in '/home/mikhail/SFCS/build/lab1_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/mikhail/SFCS/build/lab1_pubsub -- -j12 -l12
+Invoked command in '/home/mikhail/SFCS/build/lab1_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/mikhail/SFCS/build/lab1_pubsub -- -j12 -l12
+Invoking command in '/home/mikhail/SFCS/build/lab1_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/mikhail/SFCS/build/lab1_pubsub
+Invoked command in '/home/mikhail/SFCS/build/lab1_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/mikhail/SFCS/build/lab1_pubsub
