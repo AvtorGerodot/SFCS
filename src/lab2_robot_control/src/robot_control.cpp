@@ -7,16 +7,16 @@
 
 class ControlNode : public rclcpp::Node {  //Определение класса ListenerNode, который наследуется от rclcpp::Node
 public:
-    ControlNode() : Node("control_node") {  //Конструктор класса. Инициализирует ноду с именем "listener_node"
+    ControlNode() : Node("control_node"), obstacle(false) {  //Конструктор класса. Инициализирует ноду с именем "listener_node"
     //cоздаём подписку на топик "chatter" и функцией обработки callback
-    subscription_  = this->create_subscription<sensor_msgs::msg::LaserScan>(
-      "/base_scan", 10, std::bind(&ControlNode::laserCallback, this, std::placeholders::_1));
+    subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
+      "base_scan", 10, std::bind(&ControlNode::laserCallback, this, std::placeholders::_1));
 
     //создаём издателя-ответчика, публикующего сообщения типа String в топик "reply"
     publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);  
 
     timer_ = this->create_wall_timer(
-        std::chrono::milliseconds(100), std::bind(&ControlNode::timer_callback, this));
+        std::chrono::milliseconds(100), std::bind(&ControlNode::timerCallback, this));
   }
 
 private:
@@ -29,22 +29,22 @@ private:
 //       2*atan2(msg.pose.pose.orientation.z, msg.pose.pose.orientation.w));
 //   }
 
-  void laserCallback(sensor_msgs::msg::LaserScan msg){
+  void laserCallback(const sensor_msgs::msg::LaserScan msg){
     const double kMinRange = 0.5;
-    obstacle = false;
+    obstacle;
     for (size_t i = 0; i<msg.ranges.size(); i++)  //проверим нет ли вблизи робота препятствия
     {
         if (msg.ranges[i] < kMinRange)
         {
             obstacle = true;
-            RCLCPP_INFO(this->get_logger(),"OBSTACLE!!!");
+            //RCLCPP_INFO(this->get_logger(),"OBSTACLE!!!");
             break;
         }
     }
   }
 
   void timerCallback(){
-    geometry_msgs::Twist cmd;
+    geometry_msgs::msg::Twist cmd;
     if (!obstacle)
     {
       cmd.linear.x = 0.5;
@@ -57,6 +57,9 @@ private:
     }
     publisher_->publish(cmd);
   }
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
+  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr subscription_;
 
 };
 
