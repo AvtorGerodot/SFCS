@@ -15,13 +15,17 @@ find_package(sensor_msgs REQUIRED)  # Добавьте эту строку
 find_package(nav_msgs REQUIRED)  # Добавьте эту строку
 
 # Сборка узла control_node
-add_executable(control_node src/robot_control.cpp)
-ament_target_dependencies(control_node rclcpp geometry_msgs sensor_msgs nav_msgs)  # Укажите зависимости
+add_executable(control_node_1 src/robot_control_1.cpp)
+ament_target_dependencies(control_node_1 rclcpp geometry_msgs sensor_msgs nav_msgs)  # Укажите зависимости
 
+# Сборка узла control_node
+add_executable(control_node_2 src/robot_control_2.cpp)
+ament_target_dependencies(control_node_2 rclcpp geometry_msgs sensor_msgs nav_msgs)  # Укажите зависимости
 
 # Установка узлов в папку lib
 install(TARGETS
-  control_node
+  control_node_1
+  control_node_2
   DESTINATION lib/${PROJECT_NAME})
 
 
