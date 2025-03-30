@@ -23,7 +23,12 @@ public:
   }
 
 private:
-  bool obstacle;
+    bool obstacle;
+    double err = 0;
+    double int_err = 0;
+    double old_err = 0;
+    double range = 1;
+
 //   void odomCallback(nav_msgs::msg::Odometry msg) {
 //     // Вывод полученного сообщения
 //     RCLCPP_INFO(this->get_logger(), "Pose msg: x = '%f'\n
@@ -35,8 +40,13 @@ private:
   void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
     const double kMinRange = 0.5;
     obstacle = false;
+	double curr_range = msg->ranges[0];
     for (size_t i = 0; i<msg->ranges.size(); i++)  //проверим нет ли вблизи робота препятствия
     {
+        if (msg->ranges[i] < curr_range)
+		{
+		     curr_range = msg->ranges[i];
+		}
         if (msg->ranges[i] < kMinRange)
         {
             obstacle = true;
@@ -44,23 +54,26 @@ private:
             break;
         }
     }
+    err = range - curr_range;
   }
 
   void timerCallback(){
     geometry_msgs::msg::Twist cmd;
     if (!obstacle)
-    {
-      RCLCPP_INFO(this->get_logger(),"go forward");
-      cmd.linear.x = 0.5;
-      cmd.angular.z = 0;
-      }   
-    else
-      {
+	{
+		int_err += err; //интегральная ошибка
+		double dif_err = err - old_err; //дифференциальная ошибкаold_err = err;
+		//ROS_INFO_STREAM("go forward");
+		cmd.linear.x = 0.5;
+		cmd.angular.z = err + 0.1*int_err + 0.01*dif_err; //ПИД-регулирование
+	}
+	else
+	{
+		//ROS_WARN_STREAM("Spin around!");
+		cmd.linear.x = 0;
+		cmd.angular.z = 0.5;
+	}
 
-      RCLCPP_INFO(this->get_logger(),"spin");
-      cmd.linear.x = 0;
-      cmd.angular.z = 0.5;
-    }
     publisher_->publish(cmd);
   }
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
