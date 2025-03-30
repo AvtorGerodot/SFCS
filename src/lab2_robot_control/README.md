@@ -36,7 +36,7 @@
    ```bash
    ros2 run ros1_bridge dynamic_bridge
    ```
-7. Запускаем управляющую программу:
+7. Запускаем управляющую программу в четвертом терминале:
    
    - Сорсим ros foxy:
    ```bash
@@ -50,12 +50,11 @@
    ```bash
     source install/setup.bash
    ```
-   - Запускаем control_node_1 (робот вращается при виде стены)
-   или control_node_1 (робот едет вдоль стены):
+   - Запускаем control_node_1 (робот вращается при виде стены):
    ```bash
     ros2 run lab2_robot_control control_node_1
    ```
-   ИЛИ
+   ИЛИ control_node_2 (робот едет вдоль стены):
    ```bash
     ros2 run lab2_robot_control control_node_2
    ```
