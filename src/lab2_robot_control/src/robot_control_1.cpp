@@ -24,14 +24,6 @@ public:
 
 private:
   bool obstacle;
-//   void odomCallback(nav_msgs::msg::Odometry msg) {
-//     // Вывод полученного сообщения
-//     RCLCPP_INFO(this->get_logger(), "Pose msg: x = '%f'\n
-//       y = %f'\n
-//       theta =  %f'\n", msg.pose.pose.position.x, msg.pose.pose.position.y, 
-//       2*atan2(msg.pose.pose.orientation.z, msg.pose.pose.orientation.w));
-//   }
-
   void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
     const double kMinRange = 0.5;
     obstacle = false;
