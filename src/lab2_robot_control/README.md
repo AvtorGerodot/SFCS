@@ -44,7 +44,7 @@
    ```
    - Собираем проект через colcon, находясь в SFCS:
    ```bash
-    coclcon build
+    colcon build
    ```
    - Сорсим install:
    ```bash

@@ -29,14 +29,6 @@ private:
     double old_err = 0;
     double range = 1;
 
-//   void odomCallback(nav_msgs::msg::Odometry msg) {
-//     // Вывод полученного сообщения
-//     RCLCPP_INFO(this->get_logger(), "Pose msg: x = '%f'\n
-//       y = %f'\n
-//       theta =  %f'\n", msg.pose.pose.position.x, msg.pose.pose.position.y, 
-//       2*atan2(msg.pose.pose.orientation.z, msg.pose.pose.orientation.w));
-//   }
-
   void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
     const double kMinRange = 0.5;
     obstacle = false;
@@ -62,14 +54,13 @@ private:
     if (!obstacle)
 	{
 		int_err += err; //интегральная ошибка
-		double dif_err = err - old_err; //дифференциальная ошибкаold_err = err;
-		//ROS_INFO_STREAM("go forward");
+		double dif_err = err - old_err; //дифференциальная ошибка
+		old_err = err;
 		cmd.linear.x = 0.5;
-		cmd.angular.z = err + 0.1*int_err + 0.01*dif_err; //ПИД-регулирование
+		cmd.angular.z = 11 * err + 0.02 * int_err + 5.3 * dif_err; //ПИД-регулирование
 	}
 	else
 	{
-		//ROS_WARN_STREAM("Spin around!");
 		cmd.linear.x = 0;
 		cmd.angular.z = 0.5;
 	}
