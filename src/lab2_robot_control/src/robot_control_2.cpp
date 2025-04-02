@@ -54,7 +54,7 @@ private:
     if (!obstacle)
 	{
 		int_err += err; //интегральная ошибка
-		double dif_err = err - old_err; //дифференциальная ошибкаold_err = err;
+		double dif_err = err - old_err; //дифференциальная ошибка
 		old_err = err;
 		cmd.linear.x = 0.5;
 		cmd.angular.z = 11 * err + 0.02 * int_err + 5.3 * dif_err; //ПИД-регулирование
