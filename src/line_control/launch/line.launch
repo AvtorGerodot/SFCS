@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="line_control" exec="line_control_node" name="control" output="screen">
+    <remap from="scan" to="base_scan"/>
+    <param name="task_vel" value="0.5"/>
+    <param name="prop_factor" value="2.0"/>
+    <param name="int_factor" value="0.0"/>
+    <param name="diff_factor" value="0.0"/>
+    <param name="min_obstacle_range" value="1.5"/>
+    <param name="line_y" value="-6.0"/>
+  </node>
+</launch>
