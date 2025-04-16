@@ -19,6 +19,7 @@ void LineControl::laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg
             RCLCPP_WARN(this->get_logger(), "OBSTACLE!!!");
             break;
         }
+        obstacle = false;
     }
 }
 
@@ -36,17 +37,39 @@ void LineControl::poseCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
     theta = 2 * atan2(msg->pose.pose.orientation.z,
                      msg->pose.pose.orientation.w);
 }
-
+// Вычисление ошибки для линии
 double LineControl::cross_track_err_line()
 {
     return line_y - y;
 }
-
+// Вычисление ошибки для окружности
 double LineControl::cross_track_err_circle()
 {
     double dx = cx - x;
     double dy = cy - y;
     double e = sqrt(dx * dx + dy * dy) - R;
+    return e;
+}
+// Вычисление ошибки для овала
+double LineControl::cross_track_err_oval()
+{
+    double e;
+    if (x < -6.0) {
+        cx = -6.0;
+        return e = cross_track_err_circle();
+    }
+    else if (x > 6.0) {
+        cx = 6;
+        return e = cross_track_err_circle();
+    }
+    else if (y > 0) {
+        line_y = 6.0;
+        e = -cross_track_err_line();
+    }
+    else {
+        line_y = -6.0;
+        e = cross_track_err_line();
+    }
     return e;
 }
 
@@ -68,7 +91,7 @@ void LineControl::timerCallback()
     if (!obstacle)
     {
         // Вычисление текущей ошибки управления
-        double err = cross_track_err_line();
+        double err = cross_track_err_oval();
         // Публикация текущей ошибки
         publish_error(err);
         // Интегрирование ошибки
@@ -98,14 +121,14 @@ LineControl::LineControl() : Node("line_control"),
     RCLCPP_INFO(this->get_logger(), "LineControl initialisation");
     
     // Чтение параметров с установкой значений по умолчанию
-    this->declare_parameter("line_y", -10.0);
+    this->declare_parameter("line_y", -6.0);
     this->declare_parameter("cx", -6.0);
     this->declare_parameter("cy", 0.0);
     this->declare_parameter("R", 6.0);
     this->declare_parameter("task_vel", 0.5);
-    this->declare_parameter("prop_factor", 2.0);
-    this->declare_parameter("int_factor", 0.1);
-    this->declare_parameter("diff_factor", 0.01);
+    this->declare_parameter("prop_factor", 4.0);
+    this->declare_parameter("int_factor", 0.001);
+    this->declare_parameter("diff_factor", 30.0);
     this->declare_parameter("min_obstacle_range", 1.0);
     this->declare_parameter("dt", 0.1);
     
