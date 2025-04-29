@@ -1,7 +1,10 @@
 #pragma once
 //#define CONTROL_H
-#include <geometry_msgs/Twist.h>
-#include <sensor_msgs/LaserScan.h>
+#include "rclcpp/rclcpp.hpp"
+#include <chrono>
+#include "geometry_msgs/msg/twist.hpp"
+#include "sensor_msgs/msg/laser_scan.hpp"
+#include "nav_msgs/msg/odometry.hpp"
 
 //абстрактный класс - интерфейс системы управления
 class Control
