@@ -5,9 +5,9 @@
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 
-class ControlNode : public rclcpp::Node {  //Определение класса ListenerNode, который наследуется от rclcpp::Node
+class ControlNode : public rclcpp::Node {  //Определение класса ControlNode, который наследуется от rclcpp::Node
 public:
-    ControlNode() : Node("control_node"), obstacle(false) {  //Конструктор класса. Инициализирует ноду с именем "listener_node"
+    ControlNode() : Node("control_node"), obstacle(false) {  //Конструктор класса. Инициализирует ноду с именем "base_scan"
     //cоздаём подписку на топик "chatter" и функцией обработки callback
     subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
       "base_scan", 10, 
@@ -15,7 +15,7 @@ public:
           this->laserCallback(msg);
       });
 
-    //создаём издателя-ответчика, публикующего сообщения типа String в топик "reply"
+    //создаём издателя, публикующего сообщения типа Twist в топик "cmd_vel"
     publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);  
 
     timer_ = this->create_wall_timer(
