@@ -9,7 +9,7 @@
 
     <!-- Запуск Stage (ROS1) -->
     <executable 
-        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros ~/ros_course/src/stage_launch/worlds/empty.world'" 
+        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros ~/ros_course/src/stage_launch/worlds/task1.world'" 
         output="screen" 
         shell="false" 
         name="stage_ros"
@@ -23,11 +23,11 @@
         name="ros1_bridge"
     />
 
-    <!-- Запуск узла line_control (ROS2) -->
+    <!-- Запуск узла control_selector_node (ROS2) -->
     <executable 
-        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run line_control line_control_node'" 
+        cmd="/bin/bash -c 'sleep 5; source /opt/ros/foxy/setup.bash; ros2 run lab4_control_selector control_selector_node'" 
         output="screen" 
         shell="false" 
-        name="line_control"
+        name="control_selector_node"
     />
 </launch>
