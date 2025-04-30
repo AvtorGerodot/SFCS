@@ -8,8 +8,8 @@ private:
     bool obstacle = false;
     rclcpp::Logger logger_;
 public:
-    WallFollower() : logger_(rclcpp::get_logger("VoyagerControl"))  {
-        RCLCPP_DEBUG(logger_, "VoyagerControl constructor");
+    WallFollower() : logger_(rclcpp::get_logger("WallFolowerControl"))  {
+        RCLCPP_DEBUG(logger_, "WallFolower constructor");
     }
     //установка данных лазера
     void setLaserData(const std::vector<float>& data) override;

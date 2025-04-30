@@ -31,6 +31,7 @@ public:
     {
         // Инициализация алгоритмов управления
         initializeControls();
+
         // Инициализация издателя команд управления
         cmd_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
         
@@ -47,8 +48,6 @@ public:
         // Инициализация таймера (10 Гц)
         timer_ = this->create_wall_timer(
             100ms, std::bind(&ControlSelector::timerCallback, this));
-            
-        
     }
 
     ~ControlSelector()
@@ -82,7 +81,7 @@ private:
         controls_[WALLFOLLOWER] = new WallFollower();
         
         // Установка алгоритма по умолчанию
-        control_ptr_ = nullptr;//controls_[VOYAGER];
+        control_ptr_ = nullptr;
     }
 
     // Обработчик выбора алгоритма управления

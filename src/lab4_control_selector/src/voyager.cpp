@@ -2,6 +2,7 @@
 
 void VoyagerControl::setLaserData(const std::vector<float> &ranges)
 {
+    obstacle = false;
     for (size_t i = 0; i < ranges.size(); i++) // проверим нет ли вблизи робота препятствия
     {
         if (ranges[i] < min_range)

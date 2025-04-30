@@ -4,6 +4,9 @@
 class DummyControl : public Control
 {
 public:
+    DummyControl() : logger_(rclcpp::get_logger("DummyControl")){
+        RCLCPP_DEBUG(logger_, "DummyControl constructor");
+    }
     //установка данных лазера
     void setLaserData(const std::vector<float>& data) override;
 
@@ -17,5 +20,6 @@ public:
 
 private:
     bool obstacle = false;
+    rclcpp::Logger logger_;
 };
 
