@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     rclcpp::init(argc, argv);
     auto node = std::make_shared<SelectorNode>();
     
-    int selection = 1; // Voyager
+    int selection;
     
     while (rclcpp::ok())
     {

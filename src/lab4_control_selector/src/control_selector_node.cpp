@@ -29,6 +29,8 @@ class ControlSelector : public rclcpp::Node
 public:
     ControlSelector() : Node("control_node")
     {
+        // Инициализация алгоритмов управления
+        initializeControls();
         // Инициализация издателя команд управления
         cmd_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
         
@@ -46,8 +48,7 @@ public:
         timer_ = this->create_wall_timer(
             100ms, std::bind(&ControlSelector::timerCallback, this));
             
-        // Инициализация алгоритмов управления
-        initializeControls();
+        
     }
 
     ~ControlSelector()
@@ -81,7 +82,7 @@ private:
         controls_[WALLFOLLOWER] = new WallFollower();
         
         // Установка алгоритма по умолчанию
-        control_ptr_ = controls_[VOYAGER];
+        control_ptr_ = nullptr;//controls_[VOYAGER];
     }
 
     // Обработчик выбора алгоритма управления
@@ -146,7 +147,7 @@ private:
     
     // Алгоритмы управления
     Control* controls_[nControls];
-    Control* control_ptr_{nullptr};
+    Control* control_ptr_ = nullptr;
 };
 
 int main(int argc, char** argv)

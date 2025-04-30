@@ -25,7 +25,7 @@
 
     <!-- Запуск узла control_selector_node (ROS2) -->
     <executable 
-        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run lab4_control_selector control_selector_node'" 
+        cmd="/bin/bash -c 'sleep 5; source /opt/ros/foxy/setup.bash; ros2 run lab4_control_selector control_selector_node'" 
         output="screen" 
         shell="false" 
         name="control_selector_node"
