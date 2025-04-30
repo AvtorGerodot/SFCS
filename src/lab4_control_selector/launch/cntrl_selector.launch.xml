@@ -1,0 +1,40 @@
+<launch>
+    <!-- Запуск roscore (ROS1) -->
+    <executable 
+        cmd="/bin/bash -c 'source /opt/ros/noetic/setup.bash; roscore'" 
+        output="screen" 
+        shell="false" 
+        name="roscore"
+    />
+
+    <!-- Запуск Stage (ROS1) -->
+    <executable 
+        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros ~/ros_course/src/stage_launch/worlds/task1.world'" 
+        output="screen" 
+        shell="false" 
+        name="stage_ros"
+    />
+
+    <!-- Запуск моста ROS1 ↔ ROS2 -->
+    <executable 
+        cmd="/bin/bash -c 'sleep 2; source /opt/ros/noetic/setup.bash; source /opt/ros/foxy/setup.bash; ros2 run ros1_bridge dynamic_bridge --bridge-all-topics'" 
+        output="screen" 
+        shell="false" 
+        name="ros1_bridge"
+    />
+
+    <!-- Запуск узла control_selector_node (ROS2) -->
+    <executable 
+        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run lab4_control_selector control_selector_node'" 
+        output="screen" 
+        shell="false" 
+        name="control_selector_node"
+    />
+
+    <!-- <executable 
+        cmd="/bin/bash -c 'sleep 4; source /opt/ros/foxy/setup.bash; ros2 run lab4_control_selector selector'" 
+        output="screen" 
+        shell="false" 
+        name="selector"
+    /> -->
+</launch>

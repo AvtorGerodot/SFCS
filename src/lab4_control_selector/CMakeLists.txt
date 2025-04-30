@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(lab4_control_selector)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
 # Поиск необходимых зависимостей
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -10,11 +14,10 @@ find_package(nav_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 # Включение директорий с заголовочными файлами
-include_directories(include)
+# include_directories(include)
 
 # Создание библиотеки с классами управления
 add_library(control_classes
-  #src/control.cpp
   src/dummy.cpp
   src/voyager.cpp
   src/wallFollower.cpp
@@ -61,13 +64,19 @@ install(TARGETS
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-# Установка директории include
+#[[ Установка директории include
 install(DIRECTORY include/
   DESTINATION include
+)]]
+
+# Установка launch-файлов
+install(
+  DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 # Экспорт зависимостей
-ament_export_include_directories(include)
+#ament_export_include_directories(include)
 ament_export_libraries(control_classes)
 ament_export_dependencies(
   rclcpp
