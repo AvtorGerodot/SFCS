@@ -37,7 +37,7 @@ public:
         
         // Инициализация подписчиков
         laser_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
-            "/scan", 10, std::bind(&ControlSelector::laserCallback, this, std::placeholders::_1));
+            "/base_scan", 10, std::bind(&ControlSelector::laserCallback, this, std::placeholders::_1));
             
         pose_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/base_pose_ground_truth", 10, std::bind(&ControlSelector::poseCallback, this, std::placeholders::_1));
@@ -129,6 +129,7 @@ private:
         
         if (control_ptr_) {
             control_ptr_->getControl(cmd.linear.x, cmd.angular.z);
+            RCLCPP_INFO_STREAM(this->get_logger(), "Алгоритм " << control_ptr_->getName());
         } else {
             RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Алгоритм управления не выбран");
         }

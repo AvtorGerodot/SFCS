@@ -9,7 +9,7 @@
 
     <!-- Запуск Stage (ROS1) -->
     <executable 
-        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros /home/maksim/projects/POUK/ros_ws/src/stage_launch/worlds/empty.world'" 
+        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros ~/ros_course/src/stage_launch/worlds/empty.world'" 
         output="screen" 
         shell="false" 
         name="stage_ros"

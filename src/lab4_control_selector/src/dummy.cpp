@@ -5,7 +5,7 @@ void DummyControl::setLaserData(const std::vector<float> &data)
     obstacle = false;
     for (size_t i = 0; i < data.size(); i++)
     {
-        if (data[i] < 0.3)
+        if (data[i] < 0.6)
         {
             obstacle = true;
             break;
