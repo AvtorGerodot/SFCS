@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>simple_map</name>
+  <version>0.0.0</version>
+  <description>The simple_map package</description>
+
+  <maintainer email="user@todo.todo">user</maintainer>
+  <license>Apache License 2.0</license>
+
+  <!-- Зависимости для сборки -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Зависимости времени сборки -->
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <!-- Экспорт зависимостей -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
