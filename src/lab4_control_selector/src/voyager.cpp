@@ -8,7 +8,7 @@ void VoyagerControl::setLaserData(const std::vector<float> &ranges)
         if (ranges[i] < min_range)
         {
             obstacle = true;
-            RCLCPP_WARN(logger_, "OBSTACLE");
+            //RCLCPP_WARN(logger_, "OBSTACLE");
             break;
         }
     }
@@ -18,13 +18,13 @@ void VoyagerControl::getControl(double &v, double &w) //в зависимост�
 {
     if (!obstacle)
     {
-        RCLCPP_INFO(logger_, "No obstacle - go forward");
+        //RCLCPP_INFO(logger_, "No obstacle - go forward");
         v = max_vel;
         w = 0;
     }
     else
     {
-        RCLCPP_INFO(logger_, "Obstacle - spin");
+        //RCLCPP_INFO(logger_, "Obstacle - spin");
         v = 0;
         w = max_omega;
     }

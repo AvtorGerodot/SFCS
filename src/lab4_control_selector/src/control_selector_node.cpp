@@ -115,7 +115,7 @@ private:
         
         if (control_ptr_) {
             control_ptr_->getControl(cmd.linear.x, cmd.angular.z);
-            RCLCPP_INFO_STREAM(this->get_logger(), "Алгоритм " << control_ptr_->getName());
+            //RCLCPP_INFO_STREAM(this->get_logger(), "Алгоритм " << control_ptr_->getName());
         } else {
             RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "Алгоритм управления не выбран");
         }
