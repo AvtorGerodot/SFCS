@@ -4,11 +4,13 @@
 #include "nav_msgs/msg/occupancy_grid.hpp"
 #include "std_msgs/msg/u_int16.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "geometry_msgs/msg/transform_stamped.hpp"
 #include "tf2/transform_datatypes.h"
 #include "tf2_ros/buffer.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 
+#include "simple_map/scan_to_map.h"
 
 using namespace std::chrono_literals;
 
@@ -46,13 +48,15 @@ private:
         map_msg.data.resize(map_height*map_width, -1);
     }
 
-    bool determineScanTransform(tf2::Stamped<tf2::Transform>& scanTransform,
-                                const rclcpp::Time &stamp,
-                                const std::string &laser_frame)
+    void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
     {
+
+        geometry_msgs::msg::TransformStamped tfGeom;
+        const std::string &laser_frame = scan->header.frame_id;
+        const rclcpp::Time &laser_stamp = scan->header.stamp;
         try
         {
-            // if (!tfListener->waitForTransform(map_frame,
+            //if (!tfListener->waitForTransform(map_frame,
             //                                   laser_frame,
             //                                   stamp,
             //                                   rclcpp::Duration(0.1)))
@@ -60,35 +64,27 @@ private:
             //     RCLCPP_ERROR(this->get_logger(),"no transform to scan %s", laser_frame);
             //     return false;
             // }
-            buffer_->lookupTransform(map_frame, laser_frame, stamp);
+            tfGeom = buffer_->lookupTransform(map_frame, laser_frame, laser_stamp, rclcpp::Duration(0.1));
         }
         catch (tf2::TransformException &e)
         {
             RCLCPP_ERROR(this->get_logger(),"got tf exception %s", e.what());
-            return false;
-        }
-        return true;
-    }
-
-    void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
-    {
-        tf2::Stamped<tf2::Transform> scanTransform;
-        const std::string &laser_frame = scan->header.frame_id;
-        const rclcpp::Time &laser_stamp = scan->header.stamp;
-        if (!determineScanTransform(scanTransform, laser_stamp, laser_frame))
-        {
             return;
         }
+        tf2::Stamped<tf2::Transform> tf_transform;
+        tf2::convert(tfGeom, tf_transform);  //# note that tf2 is missing child_frame_id
 
         // создаем сообщение карты
         nav_msgs::msg::OccupancyGrid map_msg;
         // заполняем информацию о карте - готовим сообщение
         prepareMapMessage(map_msg, laser_stamp);
+        
 
         // положение центра дальномера в СК дальномера
         tf2::Vector3 zero_pose(0, 0, 0);
-        // положение дальномера в СК карты
-        tf2::Vector3 scan_pose = scanTransform(zero_pose);
+        // положение дальномера в СК карты=
+        tf2::Vector3 scan_pose = tf_transform * zero_pose;
+        //tf2::Vector3 scan_pose = tfGeom(zero_pose);
         RCLCPP_INFO(this->get_logger(),"scan pose %d, %d", scan_pose.x(), scan_pose.y());
 
         // задаем начало карты так, чтобы сканнер находился в центре карты
@@ -99,74 +95,70 @@ private:
         int y = (scan_pose.y() - map_msg.info.origin.position.y) / map_resolution;
         int x = (scan_pose.x() - map_msg.info.origin.position.x) / map_resolution;
         RCLCPP_INFO(this->get_logger(),"publish map  %d, %d", x, y);
-        // в клетку карты соотвтествующую центру лазера - записываем значение 0
-        map_msg.data[y * map_width + x] = 0;
+        // в клетку карты соотвтествующую центру лазера - записываем значение 100
+        map_msg.data[y * map_width + x] = 100;
+
+        int map_idx_max = map_width * map_height;
+        for (std::size_t i = 0; i < scan->ranges.size(); ++i)
+        {
+            // 1. Пропускаем невалидные значения
+            if (scan->ranges[i] < scan->range_min || scan->ranges[i] > scan->range_max)
+                continue;
+    
+            // 2. Вычисляем координаты препятствия
+            double angle = scan->angle_min + scan->angle_increment * i;
+            tf2::Vector3 obstacle_local(
+                scan->ranges[i] * cos(angle),
+                scan->ranges[i] * sin(angle),
+                0);
+    
+            // 3. Преобразуем в глобальные координаты
+            tf2::Vector3 obstacle_global = tf_transform * obstacle_local;
+            obstacle_global -= tf2::Vector3(
+                map_msg.info.origin.position.x,
+                map_msg.info.origin.position.y,
+                0);
+            // вычисляем позицию препятствия в системе координат ЛД
+            tf2::Vector3 obstacle_pose(scan->ranges[i] * cos(angle), scan->ranges[i] * sin(angle), 0.0);
+            // Шаг для прохода по лучу
+            double step = 0.1;
+            for (double r = scan->range_min; r < scan->ranges[i] - step; r += step)
+            {
+                // Точка в ДСК ЛД
+                tf2::Vector3 free_pos(r * cos(angle), r * sin(angle), 0.0);
+                // Точка в ДСК Карты
+                tf2::Vector3 free_pos_map = tf_transform * free_pos;
+                // коорд точки карты
+                int free_x = (free_pos_map.x() - map_msg.info.origin.position.x) / map_resolution;
+                int free_y = (free_pos_map.y() - map_msg.info.origin.position.y) / map_resolution;
+                // индекс в массиве карты
+                int map_free_idx = free_y * map_width + free_x;
+                // проверяем, что ячейка не находится за пределами карты
+                if (map_free_idx > 0 && map_free_idx < map_idx_max)
+                {
+                    map_msg.data[map_free_idx] = 0;
+                }
+            }
+            // вычисляем позицию препятствия в системе координат карты
+            tf2::Vector3 obstacle_pose_map = tf_transform * obstacle_pose;
+            // индексы ячейки, соответствующей позиции препятствия
+            int obstacle_x = (obstacle_pose_map.x() -
+                              map_msg.info.origin.position.x) /
+                             map_resolution;
+            int obstacle_y = (obstacle_pose_map.y() -
+                              map_msg.info.origin.position.y) /
+                             map_resolution;
+            int map_idx = obstacle_y * map_width + obstacle_x;
+            // проверяем, что ячейка не находится за пределами карты
+            if (map_idx > 0 && map_idx < map_idx_max)
+            {
+                map_msg.data[map_idx] = 100;
+            }
+        }
 
         // публикуем сообщение с построенной картой
         map_pub_->publish(map_msg);
     }
-
-    // void laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan)
-    // {
-    //     nav_msgs::msg::OccupancyGrid map_msg;
-    //     map_msg.header.frame_id = "map"; // Frame Id для карты
-    //     map_msg.header.stamp = scan->header.stamp;
-    //     map_msg.info.resolution = 0.1;   // Разрешение карты
-    //     map_msg.info.width = 100;        // Ширина карты
-    //     map_msg.info.height = 100;       // Высота карты
-    //     map_msg.info.origin.position.x = -50.0; // Центр по X
-    //     map_msg.info.origin.position.y = -50.0; // Центр по Y
-    //     map_msg.info.origin.orientation.w = 1.0; // Ориентация
-    //     map_msg.data.assign(map_msg.info.width * map_msg.info.height, -1); // Изначально карта заполнена неизвестными областями
-
-    //     try
-    //     {
-    //         geometry_msgs::msg::TransformStamped trans = buffer_->lookupTransform(
-    //             "map", scan->header.frame_id, scan->header.stamp, tf2::durationFromSec(0.1));
-            
-    //         double cx = trans.transform.translation.x;
-    //         double cy = trans.transform.translation.y;
-            
-    //         int center_x = static_cast<int>((cx - map_msg.info.origin.position.x) / map_msg.info.resolution);
-    //         int center_y = static_cast<int>((cy - map_msg.info.origin.position.y) / map_msg.info.resolution);
-            
-    //         if (center_x >= 0 && center_x < map_msg.info.width &&
-    //             center_y >= 0 && center_y < map_msg.info.height)
-    //         {
-    //             size_t idx = center_y * map_msg.info.width + center_x;
-    //             map_msg.data[idx] = 0; // Центр - свободная зона
-    //         }
-            
-    //         for (size_t i = 0; i < scan->ranges.size(); ++i)
-    //         {
-    //             float range = scan->ranges[i];
-                
-    //             if (range < scan->range_min || range > scan->range_max)
-    //                 continue;
-                    
-    //             double angle = scan->angle_min + i * scan->angle_increment;
-    //             double x = range * cos(angle);
-    //             double y = range * sin(angle);
-                
-    //             int idx_x = static_cast<int>((x - map_msg.info.origin.position.x) / map_msg.info.resolution);
-    //             int idx_y = static_cast<int>((y - map_msg.info.origin.position.y) / map_msg.info.resolution);
-                
-    //             if (idx_x >= 0 && idx_x < map_msg.info.width &&
-    //                 idx_y >= 0 && idx_y < map_msg.info.height)
-    //             {
-    //                 size_t idx = idx_y * map_msg.info.width + idx_x;
-    //                 map_msg.data[idx] = 100; // Место препятствия
-    //             }
-    //         }
-    //     }
-    //     catch (tf2::TransformException& ex)
-    //     {
-    //         RCLCPP_ERROR(get_logger(), "Transformation error: %s", ex.what());
-    //         return;
-    //     }
-        
-    //     map_pub_->publish(map_msg);
-    // }
 
     //разрешение карты
     double map_resolution = 0.1;

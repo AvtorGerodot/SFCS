@@ -25,28 +25,28 @@ include_directories(
 )
 
 # Создание библиотеки
-add_library(simple_map_lib 
-  include/simple_map/scan_to_map.h 
-  src/scan_to_map.cpp
-)
+# add_library(simple_map_lib 
+#   include/simple_map/scan_to_map.h 
+#   src/scan_to_map.cpp
+# )
 
 # Связывание библиотеки с зависимостями
-ament_target_dependencies(simple_map_lib
-  rclcpp
-  nav_msgs
-  sensor_msgs
-  geometry_msgs
-  tf2_ros
-  tf2_geometry_msgs
-)
+# ament_target_dependencies( simple_map_lib
+#   rclcpp
+#   nav_msgs
+#   sensor_msgs
+#   geometry_msgs
+#   tf2_ros
+#   tf2_geometry_msgs
+# )
 
 # Создание исполняемого файла узла
 add_executable(simple_map_node src/simple_map.cpp)
 
 # Связывание узла с зависимостями
-target_link_libraries(simple_map_node
-  simple_map_lib
-)
+# target_link_libraries(simple_map_node
+#   simple_map_lib
+# )
 ament_target_dependencies(simple_map_node
   rclcpp
   nav_msgs
@@ -58,12 +58,12 @@ ament_target_dependencies(simple_map_node
 # Установка целей для установки
 install(TARGETS
   simple_map_node
-  simple_map_lib
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
   DESTINATION lib/${PROJECT_NAME}
 )
+ # simple_map_lib
 
 # Установка заголовочных файлов
 install(DIRECTORY include/
@@ -88,7 +88,7 @@ endif()
 
 # Экспорт зависимостей
 ament_export_include_directories(include)
-ament_export_libraries(simple_map_lib)
+# ament_export_libraries(simple_map_lib)
 ament_export_dependencies(
   rclcpp
   nav_msgs
