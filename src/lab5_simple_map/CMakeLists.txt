@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(simple_map)
+project(lab5_simple_map)
 
 # Установка стандарта C++ (используем 14 или новее для ROS2)
 set(CMAKE_CXX_STANDARD 14)
@@ -24,22 +24,6 @@ include_directories(
   ${tf2_ros_INCLUDE_DIRS}
 )
 
-# Создание библиотеки
-# add_library(simple_map_lib 
-#   include/simple_map/scan_to_map.h 
-#   src/scan_to_map.cpp
-# )
-
-# Связывание библиотеки с зависимостями
-# ament_target_dependencies( simple_map_lib
-#   rclcpp
-#   nav_msgs
-#   sensor_msgs
-#   geometry_msgs
-#   tf2_ros
-#   tf2_geometry_msgs
-# )
-
 # Создание исполняемого файла узла
 add_executable(simple_map_node src/simple_map.cpp)
 
@@ -63,7 +47,6 @@ install(TARGETS
   RUNTIME DESTINATION bin
   DESTINATION lib/${PROJECT_NAME}
 )
- # simple_map_lib
 
 # Установка заголовочных файлов
 install(DIRECTORY include/
@@ -78,12 +61,6 @@ install(DIRECTORY launch
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
-  
-  # Пример добавления теста
-  # find_package(ament_cmake_gtest REQUIRED)
-  # ament_add_gtest(scan_to_map_test test/scan_to_map_test.cpp)
-  # target_link_libraries(scan_to_map_test simple_map_lib)
-  # ament_target_dependencies(scan_to_map_test rclcpp nav_msgs)
 endif()
 
 # Экспорт зависимостей

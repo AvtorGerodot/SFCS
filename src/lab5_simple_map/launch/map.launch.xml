@@ -25,7 +25,7 @@
 
     <!-- Запуск узла simple_map_node (ROS2) -->
     <executable 
-        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run simple_map simple_map_node'" 
+        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run lab5_simple_map simple_map_node'" 
         output="screen" 
         shell="false" 
         name="simple_map_node"
@@ -38,4 +38,9 @@
         shell="false" 
         name="control_selector_node"
     />
+
+    <!-- Запуск rviz2 -->
+    <node pkg="rviz2" exec="rviz2" name="rviz2">
+        <param name="rendering.library" value="GL2PS"/>
+    </node>
 </launch>
