@@ -16,7 +16,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 
 # Включение директорий с заголовками
 include_directories(
-  include
+  # include
   ${rclcpp_INCLUDE_DIRS}
   ${nav_msgs_INCLUDE_DIRS}
   ${geometry_msgs_INCLUDE_DIRS}
@@ -49,9 +49,9 @@ install(TARGETS
 )
 
 # Установка заголовочных файлов
-install(DIRECTORY include/
-  DESTINATION include
-)
+# install(DIRECTORY include/
+#   DESTINATION include
+# )
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
@@ -64,7 +64,7 @@ if(BUILD_TESTING)
 endif()
 
 # Экспорт зависимостей
-ament_export_include_directories(include)
+#ament_export_include_directories(include)
 # ament_export_libraries(simple_map_lib)
 ament_export_dependencies(
   rclcpp
