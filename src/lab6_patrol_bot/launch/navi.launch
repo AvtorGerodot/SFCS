@@ -10,5 +10,5 @@
 	<arg name="map_name" value="$(arg map_name)"/>
    </include> 
 
-   <node name="gui" pkg="rviz" type="rviz" args="-d ~/navigation/navi2.rviz"/>
+   <!-- <node name="gui" pkg="rviz" exec="rviz" args="-d ~/navigation/navi2.rviz"/> -->
 </launch>

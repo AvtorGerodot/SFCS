@@ -23,14 +23,15 @@
         name="ros1_bridge"
     />
 
-    <include file="~/navigation/launch/navi.launch">
+
+    <!-- Запуск rviz2 -->
+   <node name="gui" pkg="rviz2" exec="rviz2" args="-d ~/navigation/navi.rviz"/>
+
+   <include file="~/navigation/launch/navi.launch">
 	    <arg name="scan" value="base_scan"/>
         <arg name="map_name" value="map"/>
         <arg name="use_amcl.library" value="false"/>
 	</include>
-
-    <!-- Запуск rviz2 -->
-   <node name="gui" pkg="rviz2" type="rviz2" args="-d ~/navigation/navi.rviz"/>
 
     <!-- <node pkg="rviz2" exec="rviz2" name="rviz2">
         
