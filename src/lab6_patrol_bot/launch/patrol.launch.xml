@@ -1,5 +1,38 @@
 <launch>
-    
+    <!-- Запуск roscore (ROS1) -->
+    <executable 
+        cmd="/bin/bash -c 'source /opt/ros/noetic/setup.bash; roscore'" 
+        output="screen" 
+        shell="false" 
+        name="roscore"
+    />
 
-    
+    <!-- Запуск Stage (ROS1) -->
+    <executable 
+        cmd="/bin/bash -c 'sleep 1; source /opt/ros/noetic/setup.bash; rosrun stage_ros stageros ~/ros_course/src/stage_launch/worlds/task1.world'" 
+        output="screen" 
+        shell="false" 
+        name="stage_ros"
+    />
+
+    <!-- Запуск моста ROS1 ↔ ROS2 -->
+    <executable 
+        cmd="/bin/bash -c 'sleep 2; source /opt/ros/noetic/setup.bash; source /opt/ros/foxy/setup.bash; ros2 run ros1_bridge dynamic_bridge --bridge-all-topics'" 
+        output="screen" 
+        shell="false" 
+        name="ros1_bridge"
+    />
+
+    <include file="~/navigation/launch/navi.launch">
+	    <arg name="scan" value="base_scan"/>
+        <arg name="map_name" value="map"/>
+        <arg name="use_amcl.library" value="false"/>
+	</include>
+
+    <!-- Запуск rviz2 -->
+   <node name="gui" pkg="rviz2" type="rviz2" args="-d ~/navigation/navi.rviz"/>
+
+    <!-- <node pkg="rviz2" exec="rviz2" name="rviz2">
+        
+    </node> -->
 </launch>
