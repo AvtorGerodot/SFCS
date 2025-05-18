@@ -22,7 +22,8 @@
         shell="false" 
         name="ros1_bridge"
     />
-
+    
+    <!-- Пытался запустить python файлы через xml, возникают проблемы иногда, я бы вообще на python launch перешел если честно -->
     <!-- <executable 
         cmd="/bin/bash -c 'sleep 4; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot online_async_launch.py '" 
         output="screen" 
