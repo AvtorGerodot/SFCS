@@ -39,6 +39,10 @@ install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 
+install(DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
+
 # # Включение директорий с заголовками
 # include_directories(
 #   # include

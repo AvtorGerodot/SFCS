@@ -23,17 +23,23 @@
         name="ros1_bridge"
     />
 
+    <!-- <executable 
+        cmd="/bin/bash -c 'sleep 4; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot online_async_launch.py '" 
+        output="screen" 
+        shell="false" 
+        name="slam"
+    />
 
-    <!-- Запуск rviz2 -->
-   <node name="gui" pkg="rviz2" exec="rviz2" args="-d ~/navigation/navi.rviz"/>
+    <executable 
+        cmd="/bin/bash -c 'sleep 5; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true'" 
+        output="screen" 
+        shell="false" 
+        name="nav2"
+    /> -->
 
-   <include file="~/navigation/launch/navi.launch">
-	    <arg name="scan" value="base_scan"/>
-        <arg name="map_name" value="map"/>
-        <arg name="use_amcl.library" value="false"/>
-	</include>
+   <!-- Запуск rviz2 -->
+    <node pkg="rviz2" exec="rviz2" name="rviz2">
+        <param name="rendering.library" value="GL2PS"/>
+    </node>
 
-    <!-- <node pkg="rviz2" exec="rviz2" name="rviz2">
-        
-    </node> -->
 </launch>
