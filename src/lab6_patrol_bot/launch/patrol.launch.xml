@@ -28,9 +28,9 @@
         output="screen" 
         shell="false" 
         name="slam"
-    />
+    /> -->
 
-    <executable 
+    <!-- <executable 
         cmd="/bin/bash -c 'sleep 5; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true'" 
         output="screen" 
         shell="false" 

@@ -13,7 +13,7 @@
    ```
    - Запускаем launch:
    ```bash
-    ros2 launch lab6_simple_map patrol.launch.xml
+    ros2 launch lab6_patrol_bot patrol.launch.xml
    ```
    
 
