@@ -38,9 +38,8 @@
     ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true
    ```
 
-   В открывшейся программе rviz необходимо добавить через меню окна `Displays` `Add`-> `By Topic` топики с карты `/map` и карты от nav2 `/global_costmap/costmap`, выставляем в `Color Scheme` значение `costmap` для наглядности
 
-3. Открываем третий терминал в папке SFCS:
-   В открывшейся программе rviz необходимо добавить через меню окна `Displays` `Add`-> `By Topic` топики с карты `/map` и карты от nav2 `/global_costmap/costmap`, выставляем в `Color Scheme` значение `costmap` для наглядности
+4. В открывшейся программе rviz необходимо добавить через меню окна `Displays` `Add`-> `By Topic` топики с карты `/map` и карты от nav2 `/global_costmap/costmap`, выставляем в `Color Scheme` 
+   значение `costmap` для наглядности
 
    С помощью кнопки `2D Goal Pose` сверху экрану выставляем роботу позицию на карте 
