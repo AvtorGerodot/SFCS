@@ -118,8 +118,8 @@ def generate_launch_description():
             remappings=remappings),
 
         Node(
-            package='nav2_bt_navigator', #nav2_bt_navigator_edited
-            executable='bt_navigator', #bt_navigator_edited
+            package='nav2_bt_navigator_edited', #nav2_bt_navigator_edited
+            executable='bt_navigator_edited', #bt_navigator_edited
             name='bt_navigator',
             output='screen',
             parameters=[configured_params],

@@ -16,14 +16,14 @@ find_package(geometry_msgs REQUIRED)
 # find_package(tf2_ros REQUIRED)
 # find_package(tf2_geometry_msgs REQUIRED)
 
-add_executable(patrol_bot src/patrol_bot.cpp)
-target_include_directories(patrol_bot PRIVATE
+add_executable(patrol_bot_node src/patrol_bot.cpp)
+target_include_directories(patrol_bot_node PRIVATE
   include
   ${rclcpp_INCLUDE_DIRS}
   ${rclcpp_action_INCLUDE_DIRS}
 )
 
-target_link_libraries(patrol_bot
+target_link_libraries(patrol_bot_node
   ${rclcpp_LIBRARIES}
   ${rclcpp_action_LIBRARIES}
   ${nav2_msgs_LIBRARIES}
@@ -31,7 +31,7 @@ target_link_libraries(patrol_bot
 )
 
 install(TARGETS
-  patrol_bot
+  patrol_bot_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

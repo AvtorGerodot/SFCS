@@ -111,7 +111,7 @@ BtNavigator::on_configure(const rclcpp_lifecycle::State & /*state*/)
     rclcpp::SystemDefaultsQoS(),
     std::bind(&BtNavigator::onGoalPoseReceived, this, std::placeholders::_1));
 
-  status_pub_ = this->create_publisher<std_msgs::msg::String>("navigation_status", 10);
+  status_pub_ = this->create_publisher<std_msgs::msg::String>("navigation_status", rclcpp::SystemDefaultsQoS());
 
   action_server_ = std::make_unique<ActionServer>(
     get_node_base_interface(),
@@ -199,6 +199,7 @@ BtNavigator::on_activate(const rclcpp_lifecycle::State & /*state*/)
   RCLCPP_INFO(get_logger(), "Activating");
 
   action_server_->activate();
+  status_pub_->on_activate();
 
   return nav2_util::CallbackReturn::SUCCESS;
 }
@@ -207,11 +208,6 @@ nav2_util::CallbackReturn
 BtNavigator::on_deactivate(const rclcpp_lifecycle::State & /*state*/)
 {
   RCLCPP_INFO(get_logger(), "Deactivating");
-
-  RCLCPP_INFO(get_logger(), "Reached goal");
-  auto message = std_msgs::msg::String();
-  message.data = "Reached goal";
-  status_pub_->publish(message);
 
   action_server_->deactivate();
 
@@ -319,10 +315,15 @@ BtNavigator::navigateToPose()
   // note: if all the ControlNodes are implemented correctly, this is not needed.
   bt_->haltAllActions(tree_.rootNode());
 
+
+  auto message = std_msgs::msg::String();
+  message.data = "Reached goal";
   switch (rc) {
     case nav2_behavior_tree::BtStatus::SUCCEEDED:
-      RCLCPP_INFO(get_logger(), "Navigation succeeded");
+      RCLCPP_INFO(get_logger(), "Navigation succeeded");      
       action_server_->succeeded_current();
+  
+      status_pub_->publish(message);
       break;
 
     case nav2_behavior_tree::BtStatus::FAILED:

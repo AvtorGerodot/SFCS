@@ -1,149 +1,78 @@
-#include <iostream>
-#include <memory>
 #include <rclcpp/rclcpp.hpp>
-#include <rclcpp_action/rclcpp_action.hpp>
-#include <nav2_msgs/action/navigate_to_pose.hpp>
-//#include <move_base_msgs/action/move_base.hpp>
-#include <geometry_msgs/msg/point_stamped.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <queue>
+#include <memory>
 
-using MoveBaseAction = nav2_msgs::action::NavigateToPose;
-using GoalHandleMoveBase = rclcpp_action::ClientGoalHandle<MoveBaseAction>;
-using namespace std::placeholders;
-
-class ControlNode : public rclcpp::Node
+class GoalManager : public rclcpp::Node
 {
 public:
-    ControlNode() : Node("control_node"), trace_queue_(-1), count_(0), done_(true)
+    GoalManager() : Node("patrol_bot_node")
     {
-        // Инициализация клиента действия
-        move_base_client_ = rclcpp_action::create_client<MoveBaseAction>(this, "navigate_to_pose");
+        // Подписка на целевые позиции
+        goal_pose_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
+            "/goal_pose", 10,
+            std::bind(&GoalManager::goalPoseCallback, this, std::placeholders::_1));
 
-        // Подписка на тему clicked_point
-        point_sub_ = this->create_subscription<geometry_msgs::msg::PointStamped>(
-            "/clicked_point", 1, std::bind(&ControlNode::clickPointCallback, this, _1));
+        // Подписка на статус навигации
+        nav_status_sub_ = this->create_subscription<std_msgs::msg::String>(
+            "/navigation_status", 10,
+            std::bind(&GoalManager::navStatusCallback, this, std::placeholders::_1));
 
-        // Ожидание сервера действия
-        this->wait_for_action_server();
-    }
+        // Публикатор для отправки целей навигатору
+        single_goal_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(
+            "/single_goal_pose", 10);
 
-    void run()
-    {
-        rclcpp::Rate rate(10);
-        while (rclcpp::ok()) {
-            rclcpp::spin_some(this->get_node_base_interface());
-            if (done_) {
-                send_goal();
-            }
-            rate.sleep();
-        }
+        RCLCPP_INFO(this->get_logger(), "Goal Manager node has been initialized");
     }
 
 private:
-    void wait_for_action_server()
+    void goalPoseCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
     {
-        while (!move_base_client_->wait_for_action_server(std::chrono::seconds(1))) {
-            if (!rclcpp::ok()) {
-                RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the server.");
-                return;
+        // Добавляем новую цель в очередь
+        //if(goals_queue_.size == 1);
+        goals_queue_.push(*msg);
+        RCLCPP_INFO(this->get_logger(), "New goal received. Queue size: %zu", goals_queue_.size());
+    }
+
+    void navStatusCallback(const std_msgs::msg::String::SharedPtr msg)
+    {
+        if (msg->data == "Reached goal")
+        {
+            if (!goals_queue_.empty())
+            {
+                // Берем следующую цель из очереди
+                geometry_msgs::msg::PoseStamped next_goal = goals_queue_.front();
+                goals_queue_.pop();
+
+                // Публикуем следующую цель
+                single_goal_pub_->publish(next_goal);
+                RCLCPP_INFO(this->get_logger(), "Sending next goal to navigator. Remaining goals: %zu", 
+                           goals_queue_.size());
             }
-            RCLCPP_INFO(this->get_logger(), "Waiting for action server...");
-        }
-        RCLCPP_INFO(this->get_logger(), "Server move_base is connected");
-    }
-
-    void send_goal()
-    {
-        if (count_ == 0) return;
-
-        trace_queue_++;
-        if (trace_queue_ == 5 || trace_queue_ == count_) {
-            trace_queue_ = 0;
-        }
-
-        auto goal_msg = goals_[trace_queue_];
-        goal_msg.pose.header.stamp = this->now();
-
-        RCLCPP_INFO(this->get_logger(), "Sending goal");
-
-        auto send_goal_options = rclcpp_action::Client<MoveBaseAction>::SendGoalOptions();
-        send_goal_options.goal_response_callback =
-            std::bind(&ControlNode::goal_response_callback, this, _1);
-        send_goal_options.feedback_callback =
-            std::bind(&ControlNode::feedback_callback, this, _1, _2);
-        send_goal_options.result_callback =
-            std::bind(&ControlNode::result_callback, this, _1);
-
-        move_base_client_->async_send_goal(goal_msg, send_goal_options);
-        done_ = false;
-    }
-
-    void goal_response_callback(std::shared_future<GoalHandleMoveBase::SharedPtr> future)
-    {
-        auto goal_handle = future.get();
-        if (!goal_handle) {
-            RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
-        } else {
-            RCLCPP_INFO(this->get_logger(), "Goal accepted by server, waiting for result");
+            else
+            {
+                RCLCPP_WARN(this->get_logger(), "Goal reached but queue is empty");
+            }
         }
     }
 
-    void feedback_callback(
-        GoalHandleMoveBase::SharedPtr,
-        const std::shared_ptr<const MoveBaseAction::Feedback> feedback)
-    {
-        /*RCLCPP_INFO(this->get_logger(), "Feedback: x=%f, y=%f",
-            feedback->current_pose.pose.position.x,
-            feedback->current_pose.pose.position.y);*/
-    }
+    // Очередь целей
+    std::queue<geometry_msgs::msg::PoseStamped> goals_queue_;
 
-    void result_callback(const GoalHandleMoveBase::WrappedResult & result)
-    {
-        switch (result.code) {
-            case rclcpp_action::ResultCode::SUCCEEDED:
-                RCLCPP_INFO(this->get_logger(), "Target is reached");
-                break;
-            case rclcpp_action::ResultCode::ABORTED:
-                RCLCPP_ERROR(this->get_logger(), "Goal was aborted");
-                break;
-            case rclcpp_action::ResultCode::CANCELED:
-                RCLCPP_ERROR(this->get_logger(), "Goal was canceled");
-                break;
-            default:
-                RCLCPP_ERROR(this->get_logger(), "Unknown result code");
-                break;
-        }
-        done_ = true;
-    }
+    // Подписки
+    rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr goal_pose_sub_;
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr nav_status_sub_;
 
-    void clickPointCallback(const geometry_msgs::msg::PointStamped::SharedPtr point)
-    {
-        double target_angle = M_PI/2;
-        if (count_ < 5) count_++;
-        RCLCPP_INFO(this->get_logger(), "Get point %f %f", point->point.x, point->point.y);
-
-        // Формируем структуру цели для move_base Action
-        goals_[count_ - 1].pose.pose.position = point->point;
-        goals_[count_ - 1].pose.pose.orientation.z = sin(target_angle/2);
-        goals_[count_ - 1].pose.pose.orientation.w = cos(target_angle/2);
-        goals_[count_ - 1].pose.header.frame_id = "map";
-        goals_[count_ - 1].pose.header.stamp = this->now();
-
-        if (count_ == 1) done_ = true;
-    }
-
-    rclcpp_action::Client<MoveBaseAction>::SharedPtr move_base_client_;
-    rclcpp::Subscription<geometry_msgs::msg::PointStamped>::SharedPtr point_sub_;
-    MoveBaseAction::Goal goals_[5];
-    int trace_queue_;
-    int count_;
-    bool done_;
+    // Публикатор
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr single_goal_pub_;
 };
 
-int main(int argc, char **argv)
+int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<ControlNode>();
-    node->run();
+    auto node = std::make_shared<GoalManager>();
+    rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
 }

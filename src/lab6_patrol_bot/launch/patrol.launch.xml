@@ -22,6 +22,13 @@
         shell="false" 
         name="ros1_bridge"
     />
+
+    <executable 
+        cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run lab6_patrol_bot patrol_bot_node'" 
+        output="screen" 
+        shell="false" 
+        name="patrol_bot"
+    />
     
     <!-- Пытался запустить python файлы через xml, возникают проблемы иногда, я бы вообще на python launch перешел если честно -->
     <!-- <executable 

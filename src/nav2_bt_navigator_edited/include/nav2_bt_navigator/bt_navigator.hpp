@@ -107,7 +107,7 @@ protected:
    */
   void onGoalPoseReceived(const geometry_msgs::msg::PoseStamped::SharedPtr pose);
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr goal_sub_;
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_pub_;
+  rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::String>::SharedPtr status_pub_;
 
   /**
    * @brief Replace current BT with another one
