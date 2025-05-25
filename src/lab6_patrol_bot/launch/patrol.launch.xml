@@ -22,7 +22,8 @@
         shell="false" 
         name="ros1_bridge"
     />
-
+    
+    <!-- Запуск управляющего узла patrol_bot_node.cpp  -->
     <executable 
         cmd="/bin/bash -c 'sleep 3; source /opt/ros/foxy/setup.bash; ros2 run lab6_patrol_bot patrol_bot_node'" 
         output="screen" 
@@ -30,22 +31,23 @@
         name="patrol_bot"
     />
     
-    
+    <!-- Запуск SLAM -->
     <executable 
         cmd="/bin/bash -c 'sleep 5; source install/setup.bash;  ros2 launch lab6_patrol_bot online_async_launch.py'" 
         output="screen" 
         shell="false" 
         name="slam"
     />
-
+    
+    <!-- Запуск nav2 -->
     <executable 
         cmd="/bin/bash -c 'sleep 7; source install/setup.bash;  ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true'" 
         output="screen" 
         shell="false" 
         name="nav2"
     />
-
-   <!-- Запуск rviz2 -->
+    
+    <!-- Запуск rviz2 -->
     <node pkg="rviz2" exec="rviz2" name="rviz2">
         <param name="rendering.library" value="GL2PS"/>
     </node>
