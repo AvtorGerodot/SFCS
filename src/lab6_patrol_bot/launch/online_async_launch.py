@@ -3,7 +3,7 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, LogInfo
 from launch.conditions import UnlessCondition
-from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from nav2_common.launch import HasNodeParams
@@ -39,10 +39,20 @@ def generate_launch_description():
                                     default_params_file],
                                condition=UnlessCondition(has_node_params))
 
+    pkg_share_dir = get_package_share_directory('lab6_patrol_bot')
+    
+    # Создаем полный путь к карте
+    map_file_path = PathJoinSubstitution([
+        pkg_share_dir,
+        'config',
+        'my_map'
+    ])
+
     start_async_slam_toolbox_node = Node(
         parameters=[
           actual_params_file,
-          {'use_sim_time': use_sim_time}
+          {'use_sim_time': use_sim_time,
+          'map_file_name': map_file_path}
         ],
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
