@@ -30,20 +30,20 @@
         name="patrol_bot"
     />
     
-    <!-- Пытался запустить python файлы через xml, возникают проблемы иногда, я бы вообще на python launch перешел если честно -->
-    <!-- <executable 
-        cmd="/bin/bash -c 'sleep 4; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot online_async_launch.py '" 
-        output="screen" 
-        shell="false" 
-        name="slam"
-    /> -->
-
-    <!-- <executable 
-        cmd="/bin/bash -c 'sleep 5; source /opt/ros/foxy/setup.bash; ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true'" 
+    
+    <executable 
+        cmd="/bin/bash -c 'sleep 5; source install/setup.bash;  ros2 launch lab6_patrol_bot online_async_launch.py'" 
         output="screen" 
         shell="false" 
         name="nav2"
-    /> -->
+    />
+
+    <executable 
+        cmd="/bin/bash -c 'sleep 7; source install/setup.bash;  ros2 launch lab6_patrol_bot navigation_launch.py use_sim_time:=true'" 
+        output="screen" 
+        shell="false" 
+        name="nav2"
+    />
 
    <!-- Запуск rviz2 -->
     <node pkg="rviz2" exec="rviz2" name="rviz2">
