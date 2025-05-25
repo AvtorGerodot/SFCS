@@ -16,8 +16,7 @@
     ros2 launch lab6_patrol_bot patrol.launch.xml
    ```
 
-2. В открывшейся программе rviz необходимо добавить через меню окна `Displays` `Add`-> `By Topic` топики с карты `/map` и карты от nav2 `/global_costmap/costmap`, выставляем в `Color Scheme` 
-   значение `costmap` для наглядности
+2. В открывшейся программе rviz необходимо добавить через меню окна `Displays` `Add`-> `By Topic` топик с карты `/map` 
 
    С помощью кнопки `2D Goal Pose` сверху экрану задаём маршрут робота, состоящий из нескольких точек.
 
@@ -28,5 +27,5 @@
    ```
    - Запускаем "стартер":
    ```bash
-    ros2 topic pub /navigation_status std_msgs/msg/String "{data: 'Reached goal'}"
+    ros2 topic pub /navigation_status std_msgs/msg/String "{data: 'Reached goal'}" -1
    ```
